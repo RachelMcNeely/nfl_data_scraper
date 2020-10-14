@@ -7,6 +7,8 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 BOT_NAME = 'nfl_scraper'
 
@@ -14,11 +16,11 @@ SPIDER_MODULES = ['nfl_scraper.spiders']
 NEWSPIDER_MODULE = 'nfl_scraper.spiders'
 
 CONNECTION_STRING = 'postgresql+psycopg2://{user}:{password}@{host}/{database}'.format(
-    user = os.environ['NFL_DATA_USER'],
-    password = os.environ['NFL_DATA_PASSWORD'],
+    user = os.getenv('NFL_DATA_USER'),
+    password = os.getenv('NFL_DATA_PASSWORD'),
     host = 'localhost',
     port = 5432,
-    database = os.environ['NFL_DATABASE']
+    database = os.getenv('NFL_DATABASE')
 )
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
