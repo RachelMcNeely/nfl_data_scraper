@@ -1,2 +1,2 @@
 # nfl_data
-A postgres database to hold nfl injury data.
+A database and scrapers to hold nfl data such as injuries and player information.
