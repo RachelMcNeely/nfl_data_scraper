@@ -1,5 +1,5 @@
 # nfl_data
-A database and scrapers to hold nfl data such as injuries and player information.
+A database and Scrapy scrapers to hold nfl data such as injuries and player information.
 
 ### To run the scraper and update the database:
 To update a certain year, you can pass the year parameter in as an argument.
