@@ -15,12 +15,38 @@ def db_connect():
     """
     return create_engine(get_project_settings().get("CONNECTION_STRING"))
 
-class Injuries(DeclarativeBase):
+class InjuryReport(DeclarativeBase):
     """Sqlalchemy lines model"""
-    __tablename__ = "injuries"
+    __tablename__ = "injury_report"
 
-    week_key = Column(Text, primary_key=True)
-    player_key = Column(Text, primary_key=True)
+    team_key = Column(Text)
+    week_key = Column(Text)
+    player_key = Column(Text)
     position = Column(Text)
     injury_location = Column(Text)
     participation = Column(Text)
+    injury_key = Column(Text, primary_key=True)  ## team_key + week_key + player_key
+
+# class Injuries(DeclarativeBase):
+#     """Sqlalchemy lines model"""
+#     __tablename__ = "injuries"
+
+#     team_key = Column(Text, primary_key=True)
+#     week_key = Column(Text, primary_key=True)
+#     player_key = Column(Text, primary_key=True)
+#     position = Column(Text)
+#     injury_location = Column(Text)
+#     participation = Column(Text)
+
+
+class Reserve(DeclarativeBase):
+    """Sqlalchemy lines model"""
+    __tablename__ = "reserve"
+
+    team = Column(Text, primary_key=True)
+    year = Column(Integer, primary_key=True)
+    month = Column(Integer, primary_key=True)
+    player_key = Column(Text, primary_key=True)
+    date = Column(DateTime)
+    position = Column(Text)
+    transaction = Column(Text)
