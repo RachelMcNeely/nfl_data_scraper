@@ -25,7 +25,7 @@ class InjuryReport(DeclarativeBase):
     position = Column(Text)
     injury_location = Column(Text)
     participation = Column(Text)
-    injury_key = Column(Text, primary_key=True)  ## team_key + week_key + player_key
+    injury_key = Column(Text, primary_key=True)  ## team_key + week_key + player_key + (report | reserve)
 
 # class Injuries(DeclarativeBase):
 #     """Sqlalchemy lines model"""
