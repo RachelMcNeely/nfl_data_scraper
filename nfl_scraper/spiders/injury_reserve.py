@@ -2,12 +2,12 @@ import scrapy
 import pandas as pd
 import re
 from sqlalchemy.orm import sessionmaker
-from ..models import Reserve, db_connect
+from ..models import InjuryReserve, db_connect
 import datetime
 
 
 class ReserveSpider(scrapy.Spider):
-    name = "reserve"
+    name = "injury_reserve"
 
     def start_requests(self):
         year = getattr(self, 'year', 2020)
@@ -60,17 +60,11 @@ class ReserveSpider(scrapy.Spider):
             engine = db_connect()
             self.Session = sessionmaker(bind=engine)
             session = self.Session()
-            reserve = Reserve()
- 
-            print()
-            print()
+            reserve = InjuryReserve()
+
             date_str = dates[i] + '/' + self.year
 
-            print('HERE IT IS: ', datetime.datetime.strptime(date_str.replace('/',''), "%m%d%Y").date())
-            print()
-            print()
-
-            ir_exists = session.query(Reserve).filter_by(team=teams[i], year=self.year, month=current_month[0],
+            ir_exists = session.query(InjuryReserve).filter_by(team=teams[i], year=self.year, month=current_month[0],
                 player_key=players[i]).first()
             if ir_exists:
                 print('Transaction on injury reserve already exists for {0} in month {1}/{2}.'.format(players[i], current_month[0], self.year))
@@ -82,7 +76,10 @@ class ReserveSpider(scrapy.Spider):
                 reserve.player_key = players[i]
                 
                 date_str = dates[i] + '/' + self.year
-                reserve.date = datetime.datetime.strptime(date_str.replace('/',''), "%m%d%Y").date()    # datetime.datetime.strptime('24052010', "%d%m%Y").date()
+                reserve_date = datetime.datetime.strptime(date_str.replace('/',''), "%m%d%Y").date()
+
+                reserve.date =  reserve_date  # datetime.datetime.strptime('24052010', "%d%m%Y").date()
+                reserve.injury_key = teams[i].replace(' ', '') + str(reserve_date) + players[i].replace(' ', '') + 'RES'
                 reserve.position = positions[i]
                 reserve.transaction = transactions[i]
 

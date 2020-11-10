@@ -19,12 +19,14 @@ class InjuryReport(DeclarativeBase):
     """Sqlalchemy lines model"""
     __tablename__ = "injury_report"
 
+    year = Column(Integer)
+    week = Column(Integer)
     team_key = Column(Text)
     week_key = Column(Text)
     player_key = Column(Text)
     position = Column(Text)
     injury_location = Column(Text)
-    participation = Column(Text)
+    game_status = Column(Text)
     injury_key = Column(Text, primary_key=True)  ## team_key + week_key + player_key + (report | reserve)
 
 # class Injuries(DeclarativeBase):
@@ -39,14 +41,15 @@ class InjuryReport(DeclarativeBase):
 #     participation = Column(Text)
 
 
-class Reserve(DeclarativeBase):
+class InjuryReserve(DeclarativeBase):
     """Sqlalchemy lines model"""
-    __tablename__ = "reserve"
+    __tablename__ = "injury_reserve"
 
-    team = Column(Text, primary_key=True)
-    year = Column(Integer, primary_key=True)
-    month = Column(Integer, primary_key=True)
-    player_key = Column(Text, primary_key=True)
+    injury_key = Column(Text, primary_key=True)
+    team = Column(Text)
+    year = Column(Integer)
+    month = Column(Integer)
+    player_key = Column(Text)
     date = Column(DateTime)
     position = Column(Text)
     transaction = Column(Text)
